@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#363636">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<title>회색도시 소트</title>
+<style>
+:root{color-scheme:light;--ink:#363636;--muted:#777;--line:#ddd;--paper:#fff;--soft:#f5f5f5}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-weight:500}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}.wrap{max-width:780px;margin:0 auto;padding:24px 20px 48px}header{border-bottom:2px solid var(--ink);padding:0 0 15px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;gap:12px}.logo{font-size:28px;font-weight:800;letter-spacing:-1.3px;line-height:40px}.home-logo{border:0;background:transparent;color:inherit;padding:0;text-align:left;line-height:1.2}.music-toggle{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border:1px solid #c8c8c8;border-radius:50%;padding:0;background:#fff;color:#363636;font-family:Arial,sans-serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:-2px;text-align:center;transition:background-color .15s,color .15s,border-color .15s}.music-toggle[aria-pressed="true"]{background:#363636;color:#fff;border-color:#363636}.music-toggle:focus-visible{outline:2px solid #363636;outline-offset:3px}.audio-player{position:fixed;left:-10000px;top:0;width:1px;height:1px;border:0;opacity:0;pointer-events:none}.tag,.kicker{font-size:10px;letter-spacing:1.8px;color:var(--muted);font-weight:500}.kicker{margin-bottom:12px}.result-quote{font-size:clamp(10px,1.8vw,12px);letter-spacing:0;line-height:1.5;font-weight:500;color:#888;overflow-wrap:anywhere}h1{font-size:clamp(36px,8vw,60px);font-weight:800;line-height:1.02;letter-spacing:-.075em;margin:0 0 15px}h2{font-size:21px;font-weight:800;letter-spacing:-.05em;margin:0 0 12px}.accent{color:#D32F2F}p{line-height:1.7}.muted{color:var(--muted)}.panel{border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:24px}.season-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.season-option{position:relative;display:block;margin:0}.season-option input{position:absolute;opacity:0;pointer-events:none}.season-option span{display:flex;align-items:center;justify-content:center;min-height:66px;border:1px solid #ccc;border-radius:10px;font-size:17px;font-weight:500;transition:.15s}.season-option input:checked+span{background:var(--ink);color:white;border-color:var(--ink)}.season-option input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}.btn{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:9px;padding:12px 16px;font-weight:500}.btn.light{background:#fff;color:var(--ink)}.btn:disabled{opacity:.35;cursor:not-allowed}.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.btnrow .btn{flex:1}.full{width:100%;margin-top:18px}.hidden{display:none!important}.info{background:var(--soft);border-radius:9px;padding:12px 14px;font-size:12px;line-height:1.7;color:#555;margin-top:14px}.meta{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);margin:18px 0 10px}.track{height:4px;background:#eee;border-radius:9px;overflow:hidden}.track>span{display:block;height:100%;width:0;background:var(--ink);transition:width .15s}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.pick{min-height:190px;border:1px solid #ccc;background:#fff;color:var(--ink);border-radius:12px;padding:20px 12px;font-size:clamp(20px,4.2vw,31px);font-weight:700;letter-spacing:-.06em;overflow-wrap:anywhere;transition:.12s}.pick:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.results{list-style:none;margin:20px 0 0;padding:0}.results li{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;min-height:45px;border-bottom:1px solid var(--line);padding:13px 3px}.rank,.score{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.candidate{font-weight:600;overflow-wrap:anywhere;color:var(--ink)}.candidate.accent{color:#D32F2F}footer{border-top:1px solid var(--line);margin-top:26px;padding-top:14px;display:flex;justify-content:flex-start;gap:12px;font-size:11px;letter-spacing:.2px;color:var(--muted);text-align:left}@media(max-width:520px){.wrap{padding:18px 15px 38px}.panel{padding:16px}.season-list{gap:7px}.season-option span{min-height:58px;font-size:15px}.pair{gap:8px}.pick{min-height:150px;padding:14px 8px}.btnrow .btn{min-width:42%}.results li{grid-template-columns:34px 1fr auto}}
+</style>
+</head><body><div class="wrap">
+<header>
+<button class="logo home-logo" id="logoHome" type="button" aria-label="첫 화면으로">회색도시 소트</button>
+<button class="music-toggle" id="musicToggle" type="button" aria-label="배경 음악 재생" aria-pressed="false" title="배경 음악 재생">
+♫
+</button>
+</header>
+<main id="setup"><div class="kicker">CITY OF MIST</div><h1>좋아하는 인물을<br><span class="accent">선택</span>하세요.</h1><section class="panel"><h2>시리즈 선택</h2><div class="season-list" role="radiogroup" aria-label="시리즈 선택">
+<label class="season-option"><input type="radio" name="season" value="1" checked><span>1</span></label>
+<label class="season-option"><input type="radio" name="season" value="2"><span>2</span></label>
+<label class="season-option"><input type="radio" name="season" value="all"><span>전체</span></label>
+</div><div class="meta"><span id="count">후보 26명</span><span id="pairCount">대결 325회</span></div><button class="btn full" id="start">시작</button><button class="btn light full hidden" id="resume" style="margin-top:8px">저장된 진행 이어하기</button><button class="btn light full hidden" id="clearSave" style="margin-top:8px">저장된 진행 삭제</button><div class="info">선택은 브라우저에 자동 저장됩니다. 언제든 돌아갈 수 있습니다.</div></section></main>
+<main id="playing" class="hidden"><div class="kicker" id="playKicker">SERIES 1</div><h1 id="playTitle">회색도시1 최애 소트</h1><p class="muted">두 인물 중 더 좋아하는 쪽을 선택하세요.</p><div class="meta"><span id="progressText">비교 1 / 1</span><span id="choiceText">선택 0회</span></div><div class="track"><span id="bar"></span></div><div class="pair"><button class="pick" id="left"></button><button class="pick" id="right"></button></div><div class="btnrow"><button class="btn light" id="back" disabled>◀ 이전 선택</button><button class="btn light" id="exit">저장 후 나가기</button></div><div class="info">선택할 때마다 자동 저장됩니다. 이전 선택 버튼으로 되돌릴 수 있습니다.</div></main>
+<main id="result" class="hidden"><div class="kicker result-quote" id="resultKicker">CITY OF MIST</div><h1 id="resultTitle">회색도시1 최애 소트</h1><ol class="results" id="ranking"></ol><div class="btnrow"><button class="btn" id="share">결과 공유</button><button class="btn light" id="home">첫 화면으로</button></div></main>
+<footer id="siteFooter"><span>본 사이트는 GPT의 도움을 받아 제작되었습니다.</span></footer></div>
+<script>
+(()=>{
+const LISTS={
+ '1':['양시백','권혜연','배준혁','하태성','유상일','박근태','허건오','김주황','서재호','신호진','문현아','오미정','최재석','모용철','장지연','백건용','조용호','고상만','이경환','권현석','박재분','홍설희','홍은애','주정재','박수정','허현오'],
+ '2':['정은창','소완국','김성식','노구치','유상일','주정재','황도진','최재석','권현석','서재호','오미정','배준혁','박근태','이경환','조용호','고상만','하성철','도세훈','이준영','장희준','강재인','양태수','장지연','정은서','권혜연','양시백','유아연','홍은희','황도준','하태성'],
+ 'all':['강재인','고상만','김성식','김주황','노구치 시게노리','문현아','박근태','박수정','박재분','배준혁','백건용','서재호','소완국','신호진','양시백','양태수','오미정','유아연','이경환','장지연','장희준','정은서','정은창','조용호','최재석','하성철','하태성','허건오','허현오','홍설희','홍은애','홍은희','황도준','황도진']
+};
+const TITLES={'1':'회색도시1 최애 소트','2':'회색도시2 최애 소트','all':'회색도시 최애 소트'};
+const RESULT_TAGLINES={'1':'복수의 여정을 떠나기 전, 두 개의 무덤을 파 두어라.','2':'누구든 타인을 피흘리게 한 자는 타인에 의해 그의 피를 흘리게 되리라.','all':'CITY OF MIST'};
+const $=id=>document.getElementById(id);let state=null,history=[];
+const keyFor=c=>'graycity-sort-season-'+c+'-v2';
+function selectedCategory(){return document.querySelector('input[name="season"]:checked').value}
+function show(id){['setup','playing','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id));$('siteFooter').classList.toggle('hidden',id!=='setup');window.scrollTo({top:0,behavior:'smooth'})}
+function load(c){try{return JSON.parse(localStorage.getItem(keyFor(c))||'null')}catch(e){return null}}
+function save(){if(!state)return;try{localStorage.setItem(keyFor(state.category),JSON.stringify({state,history}));updateSaveButtons()}catch(e){}}
+function maxComparisons(n){if(n<2)return 0;const left=Math.ceil(n/2),right=Math.floor(n/2);return maxComparisons(left)+maxComparisons(right)+n-1}
+function updateCounts(){const c=selectedCategory(),n=LISTS[c].length;$('count').textContent=`후보 ${n}명`;$('pairCount').textContent=`대결 횟수 최대 ${maxComparisons(n)}회`;updateSaveButtons()}
+function updateSaveButtons(){const s=load(selectedCategory());$('resume').classList.toggle('hidden',!s||!s.state);$('clearSave').classList.toggle('hidden',!s)}
+function init(c){const names=LISTS[c].slice(),lst=[],parent=[];let n=0;lst[n]=names.map((_,i)=>i);parent[n]=-1;n++;let totalSize=0;for(let i=0;i<lst.length;i++){if(lst[i].length>=2){const mid=Math.ceil(lst[i].length/2);lst[n]=lst[i].slice(0,mid);totalSize+=lst[n].length;parent[n]=i;n++;lst[n]=lst[i].slice(mid);totalSize+=lst[n].length;parent[n]=i;n++}}state={category:c,names,lstMember:lst,parent,equal:names.map(()=>-1),rec:names.map(()=>0),cmp1:lst.length-2,cmp2:lst.length-1,head1:0,head2:0,nrec:0,numQuestion:1,totalSize,finishSize:0,finishFlag:0,choices:[]};history=[];save();show('playing');render()}
+function snapshot(){history.push(JSON.stringify(state))}
+function render(){if(!state)return;if(state.cmp1<0||state.finishFlag){finish();return}const a=state.lstMember[state.cmp1][state.head1],b=state.lstMember[state.cmp2][state.head2];$('playKicker').textContent=state.category==='all'?'SERIES ALL':`SERIES ${state.category}`;$('playTitle').textContent=TITLES[state.category];$('left').textContent=state.names[a];$('right').textContent=state.names[b];$('progressText').textContent=`${Math.min(100,Math.round(state.finishSize/Math.max(state.totalSize,1)*100))}%`;$('choiceText').textContent=`선택 ${state.choices.length}회`;$('bar').style.width=`${Math.min(99,state.finishSize/Math.max(state.totalSize,1)*100)}%`;$('back').disabled=history.length===0;save()}
+function choose(flag){
+ if(!state||state.finishFlag)return;
+ snapshot();
+ const s=state,a=s.lstMember[s.cmp1][s.head1],b=s.lstMember[s.cmp2][s.head2];
+ s.choices.push({a,b,flag});
+ if(flag<0){s.rec[s.nrec++]=a;s.head1++;s.finishSize++;while(s.equal[s.rec[s.nrec-1]]!==-1){s.rec[s.nrec++]=s.lstMember[s.cmp1][s.head1++];s.finishSize++}}
+ else{s.rec[s.nrec++]=b;s.head2++;s.finishSize++;while(s.equal[s.rec[s.nrec-1]]!==-1){s.rec[s.nrec++]=s.lstMember[s.cmp2][s.head2++];s.finishSize++}}
+ if(s.head1<s.lstMember[s.cmp1].length&&s.head2===s.lstMember[s.cmp2].length){while(s.head1<s.lstMember[s.cmp1].length){s.rec[s.nrec++]=s.lstMember[s.cmp1][s.head1++];s.finishSize++}}
+ else if(s.head1===s.lstMember[s.cmp1].length&&s.head2<s.lstMember[s.cmp2].length){while(s.head2<s.lstMember[s.cmp2].length){s.rec[s.nrec++]=s.lstMember[s.cmp2][s.head2++];s.finishSize++}}
+ if(s.head1===s.lstMember[s.cmp1].length&&s.head2===s.lstMember[s.cmp2].length){for(let i=0;i<s.lstMember[s.cmp1].length+s.lstMember[s.cmp2].length;i++)s.lstMember[s.parent[s.cmp1]][i]=s.rec[i];s.lstMember.pop();s.lstMember.pop();s.cmp1-=2;s.cmp2-=2;s.head1=s.head2=0;s.rec=s.names.map(()=>0);s.nrec=0}
+ s.numQuestion++;save();render()
+}
+function goBack(){if(!history.length)return;state=JSON.parse(history.pop());save();render()}
+function getRanking(){const arr=state.lstMember[0]||state.names.map((_,i)=>i);let rank=1,sameRank=1;return arr.map((idx,i)=>{if(i>0){if(state.equal[arr[i-1]]===idx)sameRank++;else{rank+=sameRank;sameRank=1}}return {name:state.names[idx],rank,index:idx}})}
+function finish(){state.finishFlag=1;$('bar').style.width='100%';$('resultKicker').textContent=RESULT_TAGLINES[state.category];$('resultTitle').textContent=TITLES[state.category];$('ranking').replaceChildren();getRanking().forEach(x=>{const li=document.createElement('li'),r=document.createElement('span'),n=document.createElement('span'),sc=document.createElement('span');r.className='rank';r.textContent=String(x.rank).padStart(2,'0');n.className='candidate';if(x.rank<=3)n.classList.add('accent');n.textContent=x.name;sc.className='score';sc.textContent='';li.append(r,n,sc);$('ranking').append(li)});save();show('result')}
+function resultText(){return `${TITLES[state.category]}\n${getRanking().map(x=>`${x.rank}위. ${x.name}`).join('\n')}`}
+function encode(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let bin='';for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decode(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
+function compactResultUrl(){
+ const categoryCode={'1':1,'2':2,'all':3}[state.category];
+ const ranked=getRanking();
+ const bytes=[categoryCode,ranked.length];
+ ranked.forEach(x=>bytes.push(x.index,x.rank));
+ let binary='';for(const b of bytes)binary+=String.fromCharCode(b);
+ const token=btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+ return `${location.href.split('#')[0]}#r=${token}`;
+}
+function shareOnX(){
+ const ranked=getRanking().slice(0,3);
+ const message=`${TITLES[state.category]} 결과\n${ranked.map(x=>`${x.rank}. ${x.name}`).join('\n')}\n결과 페이지: ${compactResultUrl()}`;
+ const intent=`https://x.com/intent/tweet?text=${encodeURIComponent(message)}`;
+ window.open(intent,'_blank','noopener,noreferrer');
+}
+
+function renderShared(payload){
+ const category=payload.category in TITLES?payload.category:'all';
+ $('resultKicker').textContent=RESULT_TAGLINES[category];
+ const candidateList=LISTS[category];
+ const canMap=payload.ranking.every(x=>candidateList.includes(String(x.name)));
+ const names=canMap?candidateList.slice():payload.ranking.map(x=>String(x.name));
+ const ids=payload.ranking.map((x,i)=>Number.isInteger(x.index)?x.index:names.indexOf(String(x.name)));
+ const equal=Array(names.length).fill(-1);
+ payload.ranking.forEach((x,i)=>{if(i<payload.ranking.length-1&&Number(x.rank||i+1)===Number(payload.ranking[i+1].rank||i+2))equal[ids[i]]=ids[i+1]});
+ state={category,names,lstMember:[ids],equal,choices:[],finishFlag:1};
+ $('resultTitle').textContent=TITLES[state.category];$('ranking').replaceChildren();
+ payload.ranking.forEach((x,i)=>{const li=document.createElement('li'),r=document.createElement('span'),n=document.createElement('span'),sc=document.createElement('span');r.className='rank';r.textContent=String(x.rank||i+1).padStart(2,'0');n.className='candidate';if(Number(x.rank||i+1)<=3)n.classList.add('accent');n.textContent=String(x.name);sc.className='score';sc.textContent='';li.append(r,n,sc);$('ranking').append(li)});
+ show('result')
+}
+document.querySelectorAll('input[name="season"]').forEach(x=>x.addEventListener('change',updateCounts));$('start').addEventListener('click',()=>{const c=selectedCategory();if(!LISTS[c]||LISTS[c].length<2)return;init(c)});$('resume').onclick=()=>{const s=load(selectedCategory());if(s){state=s.state;history=s.history||[];show(state.finishFlag?'result':'playing');render()}};$('clearSave').onclick=()=>{const c=selectedCategory();if(confirm('이 시즌의 저장된 진행 상황을 삭제할까요?')){localStorage.removeItem(keyFor(c));updateSaveButtons()}};$('left').onclick=()=>choose(-1);$('right').onclick=()=>choose(1);$('back').onclick=goBack;$('exit').onclick=()=>{save();show('setup');updateCounts()};$('share').onclick=shareOnX;
+const musicToggle=$('musicToggle');let musicFrame=null;
+function setMusicPlaying(playing){
+ if(playing){
+  if(!musicFrame){musicFrame=document.createElement('iframe');musicFrame.className='audio-player';musicFrame.title='배경 음악';musicFrame.allow='autoplay; encrypted-media';musicFrame.referrerPolicy='strict-origin-when-cross-origin';musicFrame.src='https://www.youtube-nocookie.com/embed/Rb9jSmNclvk?autoplay=1&loop=1&playlist=Rb9jSmNclvk&controls=0&playsinline=1&rel=0';document.body.appendChild(musicFrame)}
+  musicToggle.setAttribute('aria-pressed','true');musicToggle.setAttribute('aria-label','배경 음악 정지');musicToggle.title='배경 음악 정지';
+ }else{
+  if(musicFrame){musicFrame.remove();musicFrame=null}
+  musicToggle.setAttribute('aria-pressed','false');musicToggle.setAttribute('aria-label','배경 음악 재생');musicToggle.title='배경 음악 재생';
+ }
+}
+musicToggle.addEventListener('click',()=>setMusicPlaying(musicToggle.getAttribute('aria-pressed')!=='true'));
+const goHome=()=>{show('setup');updateCounts();updateSaveButtons()};$('home').onclick=goHome;$('logoHome').onclick=goHome;
+updateCounts();
+const compactMatch=location.hash.match(/#r=([^&]+)/);
+if(compactMatch){try{
+ let token=compactMatch[1].replace(/-/g,'+').replace(/_/g,'/');while(token.length%4)token+='=';
+ const binary=atob(token),bytes=Array.from(binary,c=>c.charCodeAt(0));
+ const category={'1':'1','2':'2','3':'all'}[String(bytes[0])],count=bytes[1];
+ if(!category||!LISTS[category]||bytes.length!==2+count*2)throw Error('Invalid result');
+ const ranking=[];for(let i=0;i<count;i++){const id=bytes[2+i*2],rank=bytes[3+i*2];if(id>=LISTS[category].length)throw Error('Invalid candidate');ranking.push({name:LISTS[category][id],rank,index:id})}
+ renderShared({category,ranking});return;
+}catch(e){}}
+const match=location.hash.match(/#result=([^&]+)/);if(match){try{const payload=decode(match[1]);if(payload.type==='graycity-result'&&Array.isArray(payload.ranking)&&payload.ranking.length){renderShared(payload);return}}catch(e){}}show('setup');
+})();
+</script></body></html>
