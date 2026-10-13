@@ -27,7 +27,7 @@
 (()=>{
 const LISTS={
  '1':['양시백','권혜연','배준혁','하태성','유상일','박근태','허건오','김주황','서재호','신호진','문현아','오미정','최재석','모용철','장지연','백건용','조용호','고상만','이경환','권현석','박재분','홍설희','홍은애','주정재','박수정','허현오'],
- '2':['정은창','소완국','김성식','노구치','유상일','주정재','황도진','최재석','권현석','서재호','오미정','배준혁','박근태','이경환','조용호','고상만','하성철','도세훈','이준영','장희준','강재인','양태수','장지연','정은서','권혜연','양시백','유아연','홍은희','황도준','하태성'],
+ '2':['정은창','소완국','김성식','노구치 시게노리','유상일','주정재','황도진','최재석','권현석','서재호','오미정','배준혁','박근태','이경환','조용호','고상만','하성철','도세훈','이준영','장희준','강재인','양태수','장지연','정은서','권혜연','양시백','유아연','홍은희','황도준','하태성'],
  'all':['양시백 (1)','권혜연 (1)','배준혁 (1)','하태성','유상일 (1)','박근태 (1)','허건오','김주황','서재호 (1)','신호진','문현아','오미정 (1)','최재석 (1)','모용철','장지연','백건용','조용호','고상만','이경환','권현석','박재분','홍설희','홍은애','주정재 (1)','박수정','허현오','정은창','소완국','김성식','노구치 시게노리','유상일 (2)','주정재 (2)','황도진','최재석 (2)','서재호 (2)','오미정 (2)','배준혁 (2)','박근태 (2)','하성철','도세훈','이준영','장희준','강재인','양태수','정은서','권혜연 (2)','양시백 (2)','유아연','홍은희','황도준']
 };
 const TITLES={'1':'회색도시1 최애 소트','2':'회색도시2 최애 소트','all':'회색도시 최애 소트'};
@@ -69,15 +69,28 @@ function compactResultUrl(){
  ranked.forEach(x=>bytes.push(x.index,x.rank));
  let binary='';for(const b of bytes)binary+=String.fromCharCode(b);
  const token=btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
- return `${location.href.split('#')[0]}#r=${token}`;
+ return `${location.href.split('#')[0].split('?')[0]}?r=${token}`;
 }
-function shareOnX(){
+async function shareOnX(){
  const ranked=getRanking().slice(0,5);
  const categoryLabel=state.category==='1'?'회색도시1':state.category==='2'?'회색도시2':'회색도시';
  const emoji=['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣'];
- const message=`🗳️ ${categoryLabel} 최애 소트 결과 🗳️\n\n${ranked.map((x,i)=>`${emoji[i]} ${x.rank}위 ${x.name}`).join('\n\n')}\n\n${compactResultUrl()}`;
- const intent=`https://x.com/intent/tweet?text=${encodeURIComponent(message)}`;
- window.open(intent,'_blank','noopener,noreferrer');
+ const resultUrl=compactResultUrl();
+ let shareWindow=window.open('about:blank','_blank');
+ const openIntent=url=>{
+  const message=`🗳️ ${categoryLabel} 최애 소트 결과 🗳️\n${ranked.map((x,i)=>`${emoji[i]} ${x.rank}위 ${x.name}`).join('\n')}\n${url}`;
+  const intent=`https://x.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  if(shareWindow&&!shareWindow.closed){shareWindow.location.replace(intent)}else{window.location.href=intent}
+ };
+ if(shareWindow){shareWindow.document.title='공유 링크 준비 중';shareWindow.document.body.textContent='공유 링크를 압축하고 있습니다…'}
+ try{
+  const api=`https://is.gd/create.php?format=simple&url=${encodeURIComponent(resultUrl)}`;
+  const response=await fetch(api,{method:'GET'});
+  if(!response.ok)throw Error('Shortener request failed');
+  const shortUrl=(await response.text()).trim();
+  if(!/^https?:\/\/is\.gd\/[\w-]+$/.test(shortUrl))throw Error('Invalid short URL');
+  openIntent(shortUrl);
+ }catch(e){openIntent(resultUrl)}
 }
 
 function renderShared(payload){
@@ -103,13 +116,13 @@ let selectSound=null;
 function playWhoosh(){
  try{
   if(!selectSound){selectSound=new Audio(selectSoundUrl);selectSound.preload='auto'}
-  selectSound.pause();selectSound.currentTime=0;
+  selectSound.pause();selectSound.currentTime=0;selectSound.volume=0.3;
   const playback=selectSound.play();if(playback&&typeof playback.catch==='function')playback.catch(()=>{});
  }catch(e){}
 }
 function setMusicPlaying(playing){
  if(playing){
-  if(!musicFrame){musicFrame=document.createElement('iframe');musicFrame.className='audio-player';musicFrame.title='배경 음악';musicFrame.allow='autoplay; encrypted-media';musicFrame.referrerPolicy='strict-origin-when-cross-origin';musicFrame.src=`https://www.youtube-nocookie.com/embed/${chosenMusicId}?autoplay=1&loop=1&playlist=${chosenMusicId}&controls=0&playsinline=1&rel=0`;document.body.appendChild(musicFrame)}
+  if(!musicFrame){musicFrame=document.createElement('iframe');musicFrame.className='audio-player';musicFrame.title='배경 음악';musicFrame.allow='autoplay; encrypted-media; picture-in-picture';musicFrame.setAttribute('allowfullscreen','');musicFrame.referrerPolicy='strict-origin-when-cross-origin';musicFrame.src=`https://www.youtube.com/embed/${chosenMusicId}?autoplay=1&loop=1&playlist=${chosenMusicId}&controls=0&playsinline=1&rel=0`;document.body.appendChild(musicFrame)}
   musicToggle.setAttribute('aria-pressed','true');musicToggle.setAttribute('aria-label','배경 음악 정지');musicToggle.title='배경 음악 정지';
  }else{
   if(musicFrame){musicFrame.remove();musicFrame=null}
@@ -119,7 +132,7 @@ function setMusicPlaying(playing){
 musicToggle.addEventListener('click',()=>setMusicPlaying(musicToggle.getAttribute('aria-pressed')!=='true'));
 const goHome=()=>{show('setup');updateCounts();updateSaveButtons()};$('home').onclick=goHome;$('logoHome').onclick=goHome;
 updateCounts();
-const compactMatch=location.hash.match(/#r=([^&]+)/);
+const compactMatch=location.search.match(/[?&]r=([^&]+)/)||location.hash.match(/#r=([^&]+)/);
 if(compactMatch){try{
  let token=compactMatch[1].replace(/-/g,'+').replace(/_/g,'/');while(token.length%4)token+='=';
  const binary=atob(token),bytes=Array.from(binary,c=>c.charCodeAt(0));
