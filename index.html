@@ -78,7 +78,7 @@ async function shareOnX(){
  const resultUrl=compactResultUrl();
  let shareWindow=window.open('about:blank','_blank');
  const openIntent=url=>{
-  const message=`🗳️ ${categoryLabel} 최애 소트 결과 🗳️\n${ranked.map((x,i)=>`${emoji[i]} ${x.rank}위 ${x.name}`).join('\n')}\n${url}`;
+  const message=`🗳️${categoryLabel} 최애 소트 결과🗳️\n${ranked.map((x,i)=>`${emoji[i]} ${x.name}`).join('\n')}\n${url}`;
   const intent=`https://x.com/intent/tweet?text=${encodeURIComponent(message)}`;
   if(shareWindow&&!shareWindow.closed){shareWindow.location.replace(intent)}else{window.location.href=intent}
  };
